@@ -112,6 +112,7 @@ export class ChoTotCrawler {
     
     try {
       const url = `${this.baseUrl}${this.categoryPath}${this.locationPath}?page=${page}`;
+	  console.log(url);
       const response = await axios.get(url);
       const $ = cheerio.load(response.data);
       

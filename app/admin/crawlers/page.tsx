@@ -192,6 +192,11 @@ export default function AdminCrawlersPage() {
       minute: '2-digit',
     }).format(date);
   };
+
+  if (!session?.user.isAdmin) {
+    return <div>Bạn không có quyền truy cập trang này.</div>;
+  }
+
   
   return (
     <div className="flex flex-col min-h-screen">

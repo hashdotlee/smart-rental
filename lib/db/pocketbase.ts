@@ -10,7 +10,7 @@ export const getPocketBase = () => {
     if (typeof window === 'undefined' && 
         process.env.POCKETBASE_ADMIN_EMAIL && 
         process.env.POCKETBASE_ADMIN_PASSWORD) {
-      pb.admins.authWithPassword(
+      pb.collection("_superusers").authWithPassword(
         process.env.POCKETBASE_ADMIN_EMAIL,
         process.env.POCKETBASE_ADMIN_PASSWORD,
 		{ cache: "no-store" }
@@ -27,9 +27,10 @@ export const authPocketBase = async () => {
   
   if (!pb.authStore.isValid) {
     if (process.env.POCKETBASE_ADMIN_EMAIL && process.env.POCKETBASE_ADMIN_PASSWORD) {
-      await pb.admins.authWithPassword(
+      pb.collection("_superusers").authWithPassword(
         process.env.POCKETBASE_ADMIN_EMAIL,
-        process.env.POCKETBASE_ADMIN_PASSWORD
+        process.env.POCKETBASE_ADMIN_PASSWORD,
+		{ cache: "no-store" }
       );
     } else {
       throw new Error('PocketBase authentication failed');
