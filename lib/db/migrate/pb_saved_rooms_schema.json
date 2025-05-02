@@ -1,0 +1,54 @@
+[
+  {
+    "id": "pbc_ee604d7e9c",
+    "name": "saved_rooms",
+    "type": "base",
+    "system": false,
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "fields": [
+      {
+        "id": "fld_41e945f73d",
+        "name": "user",
+        "type": "relation",
+        "required": true,
+        "system": false,
+        "unique": false,
+        "presentable": false,
+        "hidden": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true
+        }
+      },
+      {
+        "id": "fld_3b1ee10129",
+        "name": "room",
+        "type": "relation",
+        "required": true,
+        "system": false,
+        "unique": false,
+        "presentable": false,
+        "hidden": false,
+        "options": {
+          "collectionId": "rental_rooms",
+          "cascadeDelete": true
+        }
+      },
+      {
+        "id": "fld_a34ed39df3",
+        "name": "notes",
+        "type": "text",
+        "required": false,
+        "system": false,
+        "unique": false,
+        "presentable": false,
+        "hidden": false
+      }
+    ],
+    "indexes": []
+  }
+]
