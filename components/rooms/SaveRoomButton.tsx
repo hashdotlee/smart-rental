@@ -10,7 +10,7 @@ interface SaveRoomButtonProps {
 }
 
 export default function SaveRoomButton({ roomId }: SaveRoomButtonProps) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isSaved, setIsSaved] = useState(false);
   const [loading, setLoading] = useState(false);
   

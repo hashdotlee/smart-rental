@@ -31,7 +31,7 @@ interface SavedRoom {
 export default function SavedRoomsPage() {
   const [savedRooms, setSavedRooms] = useState<SavedRoom[]>([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   
   useEffect(() => {
     if (status === 'authenticated') {

@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { ChoTotCrawler } from '@/lib/crawlers/chotot/ChoTotCrawler';
-import { getServerSession } from 'next-auth';
 import { auth } from '@/auth';
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     // Kiểm tra quyền admin
     const session = await auth();

@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getSession } from 'next-auth/react';
 import { getPocketBase } from '@/lib/db/pocketbase';
 
 export async function POST(request: NextRequest) {
   try {
     // Kiểm tra phiên đăng nhập
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
     
     if (!session?.user?.id) {
       return NextResponse.json(

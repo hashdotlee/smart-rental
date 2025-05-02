@@ -34,7 +34,7 @@ export default function DashboardPage() {
       
       try {
         const pb = getPocketBase();
-        const records = await pb.collection('room_criteria').getFullList({
+        const records: Criteria[] = await pb.collection('room_criteria').getFullList({
           filter: `user = "${session.user.id}"`,
           sort: '-created',
         });

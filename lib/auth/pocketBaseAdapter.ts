@@ -15,7 +15,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
         id: newUser.id,
         email: newUser.email,
         name: newUser.name,
-        image: newUser.avatar ? pb.files.getUrl(newUser, newUser.avatar) : null,
+        image: newUser.avatar ? pb.files.getURL(newUser, newUser.avatar) : null,
         emailVerified: newUser.verified ? new Date() : null,
       };
     },
@@ -28,7 +28,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
           id: user.id,
           email: user.email,
           name: user.name,
-          image: user.avatar ? pb.files.getUrl(user, user.avatar) : null,
+          image: user.avatar ? pb.files.getURL(user, user.avatar) : null,
           emailVerified: user.verified ? new Date() : null,
         };
       } catch (error) {
@@ -50,7 +50,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
           id: user.id,
           email: user.email,
           name: user.name,
-          image: user.avatar ? pb.files.getUrl(user, user.avatar) : null,
+          image: user.avatar ? pb.files.getURL(user, user.avatar) : null,
           emailVerified: user.verified ? new Date() : null,
         };
       } catch (error) {
@@ -58,7 +58,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
       }
     },
 
-    async getUserByAccount({ provider, providerAccountId }) {
+    async getUserByAccount({ providerAccountId }) {
       try {
         const fbAccountsList = await pb.collection('fb_accounts').getList(1, 1, {
           filter: `facebookId = "${providerAccountId}"`,
@@ -76,7 +76,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
           id: user.id,
           email: user.email,
           name: user.name,
-          image: user.avatar ? pb.files.getUrl(user, user.avatar) : null,
+          image: user.avatar ? pb.files.getURL(user, user.avatar) : null,
           emailVerified: user.verified ? new Date() : null,
         };
       } catch (error) {
@@ -95,7 +95,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
         id: updatedUser.id,
         email: updatedUser.email,
         name: updatedUser.name,
-        image: updatedUser.avatar ? pb.files.getUrl(updatedUser, updatedUser.avatar) : null,
+        image: updatedUser.avatar ? pb.files.getURL(updatedUser, updatedUser.avatar) : null,
         emailVerified: updatedUser.verified ? new Date() : null,
       };
     },
@@ -103,7 +103,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
     async linkAccount(account) {
       try {
         // Tìm user
-        const user = await this.getUser(account.userId);
+        const user = await this.getUser?.(account.userId);
         if (!user) throw new Error("User not found");
         
         // Lưu account Facebook
@@ -121,7 +121,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
       }
     },
 
-    async unlinkAccount({ provider, providerAccountId }) {
+    async unlinkAccount({ providerAccountId }) {
       try {
         const fbAccountsList = await pb.collection('fb_accounts').getList(1, 1, {
           filter: `facebookId = "${providerAccountId}"`,
@@ -154,7 +154,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
         // Lưu ý: Đây là đơn giản hóa, thực tế cần xác minh token
         const userId = sessionToken.split(".")[0];
         
-        const user = await this.getUser(userId);
+        const user = await this.getUser?.(userId);
         if (!user) return null;
         
         return {
@@ -181,7 +181,7 @@ export function PocketBaseAdapter(pb: PocketBase): Adapter {
       };
     },
 
-    async deleteSession(sessionToken) {
+    async deleteSession() {
       // PocketBase tự quản lý session nên không cần xử lý gì thêm
       return;
     },

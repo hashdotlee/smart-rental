@@ -39,14 +39,14 @@ export default function ComparePage() {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [roomIds.length]);
   
   const fetchRooms = async () => {
     try {
       setLoading(true);
       
       const pb = getPocketBase();
-      const records = await pb.collection('rental_rooms').getFullList({
+      const records: Room[] = await pb.collection('rental_rooms').getFullList({
         filter: roomIds.map(id => `id = "${id}"`).join(' || '),
       });
       
@@ -212,7 +212,7 @@ export default function ComparePage() {
                   <td key={`${room.id}-utilities`} className="px-4 py-3 border-b border-gray-200">
                     {room.utilities && room.utilities.length > 0 ? (
                       <div className="flex flex-wrap justify-center gap-1">
-                        {room.utilities.map((utility, index) => (
+                        {room.utilities.map((utility) => (
                           <span 
                             key={`${room.id}-${utility}`} 
                             className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full"

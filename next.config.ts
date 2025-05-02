@@ -2,7 +2,7 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {
-    serverComponentsExternalPackages: ['puppeteer'],
+    serverExternalPackages: ['puppeteer'],
   },
   images: {
     domains: [

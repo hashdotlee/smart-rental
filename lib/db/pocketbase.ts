@@ -12,7 +12,8 @@ export const getPocketBase = () => {
         process.env.POCKETBASE_ADMIN_PASSWORD) {
       pb.admins.authWithPassword(
         process.env.POCKETBASE_ADMIN_EMAIL,
-        process.env.POCKETBASE_ADMIN_PASSWORD
+        process.env.POCKETBASE_ADMIN_PASSWORD,
+		{ cache: "no-store" }
       );
     }
   }

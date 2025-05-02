@@ -42,7 +42,7 @@ export default function NotificationsPage() {
       setLoading(true);
       
       const pb = getPocketBase();
-      const records = await pb.collection('notifications').getFullList({
+      const records: Notification[] = await pb.collection('notifications').getFullList({
         filter: `user = "${session?.user?.id}"`,
         sort: '-created',
         expand: 'room',

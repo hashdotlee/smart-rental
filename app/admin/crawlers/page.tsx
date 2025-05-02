@@ -3,7 +3,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getPocketBase } from '@/lib/db/pocketbase';
 import toast from 'react-hot-toast';
@@ -33,9 +32,8 @@ export default function AdminCrawlersPage() {
   const [newGroupId, setNewGroupId] = useState('');
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupUrl, setNewGroupUrl] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [_, setLoading] = useState(true);
   const { data: session } = useSession();
-  const router = useRouter();
   
   useEffect(() => {
     if (!session) {
@@ -52,14 +50,14 @@ export default function AdminCrawlersPage() {
       const pb = getPocketBase();
       
       // Lấy danh sách jobs
-      const jobsList = await pb.collection('crawl_jobs').getFullList({
+      const jobsList: CrawlJob[] = await pb.collection('crawl_jobs').getFullList({
         sort: '-created',
       });
       
       setJobs(jobsList);
       
       // Lấy danh sách nhóm Facebook
-      const groupsList = await pb.collection('fb_groups').getFullList({
+      const groupsList: FacebookGroup[] = await pb.collection('fb_groups').getFullList({
         sort: 'name',
       });
       

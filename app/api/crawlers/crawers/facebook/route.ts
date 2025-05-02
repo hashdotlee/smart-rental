@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { FacebookCrawler } from '@/lib/crawlers/facebook/FacebookCrawler';
 import { getPocketBase } from '@/lib/db/pocketbase';
-import { getServerSession } from 'next-auth';
 import { auth } from '@/auth';
 
 export async function POST(request: NextRequest) {

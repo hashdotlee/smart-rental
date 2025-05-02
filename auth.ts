@@ -28,13 +28,14 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+
         if (!credentials?.email || !credentials?.password) return null;
         
         try {
           const pb = getPocketBase();
           const authData = await pb.collection('users').authWithPassword(
-            credentials.email,
-            credentials.password
+            credentials.email as string,
+            credentials.password as string
           );
           
           return {
@@ -78,10 +79,10 @@ export const {
     async session({ session, token }) {
       // Chuyển thông tin từ token sang session để client có thể sử dụng
       if (token) {
-        session.user.id = token.id;
-        session.user.accessToken = token.accessToken;
-        session.user.facebookId = token.facebookId;
-        session.accessTokenExpiresAt = token.expiresAt;
+        session.user.id = token.id as string;
+        session.user.accessToken = token.accessToken as string;
+        session.user.facebookId = token.facebookId as string;
+        session.accessTokenExpiresAt = token.expiresAt as number;
       }
       
       return session;
@@ -122,7 +123,7 @@ export const {
             // Cập nhật token
             await pb.collection('fb_accounts').update(existingFbAccounts.items[0].id, {
               accessToken: account.access_token,
-              expiresAt: new Date(account.expires_at * 1000).toISOString(),
+              expiresAt: new Date(Number(account?.expires_at) * 1000).toISOString(),
             });
           } else {
             // Tạo mới
@@ -130,7 +131,7 @@ export const {
               user: userId,
               facebookId: profile.id,
               accessToken: account.access_token,
-              expiresAt: new Date(account.expires_at * 1000).toISOString(),
+              expiresAt: new Date(Number(account.expires_at) * 1000).toISOString(),
             });
           }
           

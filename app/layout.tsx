@@ -4,6 +4,7 @@ import './globals.css';
 import AuthProvider from '@/context/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 import { initServer } from '@/lib/server-init';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   description: 'Ứng dụng tìm kiếm phòng trọ tại Hà Nội sử dụng AI',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="vi">
       <body className={inter.className}>
         <AuthProvider>
+		<Suspense fallback={<div className="flex justify-center items-center h-screen">Loading...</div>}>
           {children}
+		  </Suspense>
           <Toaster position="top-right" />
         </AuthProvider>
       </body>

@@ -3,19 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import SaveRoomButton from '@/components/rooms/SaveRoomButton';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { getPocketBase } from '@/lib/db/pocketbase';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
-import toast from 'react-hot-toast';
-
-interface RoomDetailPageProps {
-  params: {
-    id: string;
-  };
-}
 
 interface Room {
   id: string;
@@ -46,7 +39,8 @@ interface Room {
   longitude?: number;
 }
 
-export default function RoomDetailPage({ params }: RoomDetailPageProps) {
+export default function RoomDetailPage() {
+  const params = useParams() as {id: string};
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +53,7 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
         setLoading(true);
         
         const pb = getPocketBase();
-        const record = await pb.collection('rental_rooms').getOne(params.id);
+        const record = await pb.collection<Room>('rental_rooms').getOne(params.id!);
         
         setRoom(record);
       } catch (error) {

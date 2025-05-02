@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { getPocketBase } from '@/lib/db/pocketbase';
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
+import { getPocketBase } from '@/lib/db/pocketbase';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import RoomCard from './components/RoomCard';
 import RoomFilter, { RoomFilters } from './components/RoomFilter';
-import toast from 'react-hot-toast';
 
 interface Room {
   id: string;
@@ -44,7 +44,7 @@ export default function RoomsPage() {
       const pb = getPocketBase();
       
       // Xây dựng filter query
-      let filterQueries = ['available = true'];
+      const filterQueries = ['available = true'];
       
       if (filters.minPrice) {
         filterQueries.push(`price >= ${filters.minPrice}`);
@@ -77,7 +77,7 @@ export default function RoomsPage() {
       const filterQuery = filterQueries.join(' && ');
       
       // Fetch rooms with pagination
-      const resultList = await pb.collection('rental_rooms').getList(currentPage, roomsPerPage, {
+      const resultList = await pb.collection<Room>('rental_rooms').getList(currentPage, roomsPerPage, {
         filter: filterQuery,
         sort: '-created',
       });
@@ -110,7 +110,7 @@ export default function RoomsPage() {
     const maxVisiblePages = 5;
     
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
     
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);

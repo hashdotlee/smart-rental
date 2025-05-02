@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPocketBase } from '@/lib/db/pocketbase';
-import { getServerSession } from 'next-auth';
 import { auth } from '@/auth';
 
 // Lấy danh sách phòng đã lưu
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await auth();
     
